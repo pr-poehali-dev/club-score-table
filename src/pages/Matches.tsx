@@ -1,6 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface Match {
   id: number;
@@ -49,10 +52,16 @@ const matches: Match[] = [
 ];
 
 const Matches = () => {
+  const headerSection = useScrollAnimation();
+  const matchesSection = useScrollAnimation();
+  const statsSection = useScrollAnimation();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/5">
-      <div className="container mx-auto px-4 py-12">
-        <div className="text-center mb-12">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/5">
+        <div className="container mx-auto px-4 py-12">
+          <div ref={headerSection.ref} className={`text-center mb-12 ${headerSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Расписание Матчей
           </h1>
@@ -61,9 +70,9 @@ const Matches = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-6">
-          {matches.map((match) => (
-            <Card key={match.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/50">
+        <div ref={matchesSection.ref} className={`max-w-4xl mx-auto space-y-6 ${matchesSection.isVisible ? '' : 'opacity-0'}`}>
+          {matches.map((match, index) => (
+            <Card key={match.id} className={`overflow-hidden hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/50 ${matchesSection.isVisible ? `animate-fade-in-up animation-delay-${index}00` : ''}`}>
               <CardHeader className="bg-gradient-to-r from-primary/5 to-secondary/5 pb-4">
                 <div className="flex justify-between items-center">
                   <CardTitle className="text-lg text-muted-foreground">{match.date}</CardTitle>
@@ -116,7 +125,7 @@ const Matches = () => {
           ))}
         </div>
 
-        <Card className="mt-12 max-w-4xl mx-auto bg-gradient-to-r from-secondary to-secondary/80">
+        <Card ref={statsSection.ref} className={`mt-12 max-w-4xl mx-auto bg-gradient-to-r from-secondary to-secondary/80 ${statsSection.isVisible ? 'animate-scale-in' : 'opacity-0'}`}>
           <CardContent className="p-8 text-center">
             <Icon name="Calendar" size={48} className="mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">Турнирная Таблица</h2>
@@ -141,8 +150,10 @@ const Matches = () => {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

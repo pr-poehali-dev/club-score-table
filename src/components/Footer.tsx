@@ -15,10 +15,10 @@ const Footer = () => {
                   className="w-10 h-10 object-contain"
                 />
               </div>
-              <span className="text-2xl font-bold">ФК UNION</span>
+              <span className="text-2xl font-bold">ФК UNION ВОРОНЕЖ</span>
             </div>
             <p className="text-primary-foreground/80 text-sm">
-              Профессиональный футбольный клуб, объединяющий традиции и современный футбол
+              Профессиональный футбольный клуб из Воронежа, объединяющий традиции и современный футбол
             </p>
           </div>
 

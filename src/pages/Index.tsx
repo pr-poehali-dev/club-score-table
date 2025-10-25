@@ -28,7 +28,7 @@ const Index = () => {
                   alt="FC Union Logo" 
                   className="w-24 h-24 object-contain bg-white/10 rounded-full p-2 backdrop-blur-sm"
                 />
-                <h1 className="text-6xl font-bold">ФК UNION</h1>
+                <h1 className="text-6xl font-bold">ФК UNION ВОРОНЕЖ</h1>
               </div>
               <p className="text-2xl mb-8 text-white/90">
                 Сила, единство, победа - наш путь к чемпионству

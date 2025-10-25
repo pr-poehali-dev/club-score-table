@@ -1,12 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const Contact = () => {
+  const headerSection = useScrollAnimation();
+  const formSection = useScrollAnimation();
+  const mapSection = useScrollAnimation();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      <div className="container mx-auto px-4 py-12">
-        <div className="text-center mb-12">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+        <div className="container mx-auto px-4 py-12">
+          <div ref={headerSection.ref} className={`text-center mb-12 ${headerSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Контакты
           </h1>
@@ -15,8 +24,8 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
-          <Card className="border-2">
+        <div ref={formSection.ref} className={`max-w-5xl mx-auto grid md:grid-cols-2 gap-8 ${formSection.isVisible ? '' : 'opacity-0'}`}>
+          <Card className={`border-2 ${formSection.isVisible ? 'animate-fade-in-left' : ''}`}>
             <CardHeader>
               <CardTitle className="text-2xl">Отправить сообщение</CardTitle>
             </CardHeader>
@@ -60,7 +69,7 @@ const Contact = () => {
             </CardContent>
           </Card>
 
-          <div className="space-y-6">
+          <div className={`space-y-6 ${formSection.isVisible ? 'animate-fade-in-right animation-delay-200' : ''}`}>
             <Card className="border-2 hover:border-primary/50 transition-all">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
@@ -135,7 +144,7 @@ const Contact = () => {
           </div>
         </div>
 
-        <Card className="mt-12 max-w-5xl mx-auto overflow-hidden">
+        <Card ref={mapSection.ref} className={`mt-12 max-w-5xl mx-auto overflow-hidden ${mapSection.isVisible ? 'animate-scale-in' : 'opacity-0'}`}>
           <div className="aspect-video bg-muted relative">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.331650866447!2d37.61772131594!3d55.75199998055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a50b315e573%3A0xa886bf5a3d9b2e68!2sRed%20Square!5e0!3m2!1sen!2sru!4v1234567890"

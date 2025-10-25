@@ -1,5 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface Milestone {
   year: string;
@@ -48,10 +51,17 @@ const milestones: Milestone[] = [
 ];
 
 const History = () => {
+  const headerSection = useScrollAnimation();
+  const heroSection = useScrollAnimation();
+  const timelineSection = useScrollAnimation();
+  const statsSection = useScrollAnimation();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/5">
-      <div className="container mx-auto px-4 py-12">
-        <div className="text-center mb-12">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/5">
+        <div className="container mx-auto px-4 py-12">
+          <div ref={headerSection.ref} className={`text-center mb-12 ${headerSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             История Клуба
           </h1>
@@ -60,8 +70,8 @@ const History = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto mb-16">
-          <Card className="overflow-hidden">
+        <div ref={heroSection.ref} className="max-w-4xl mx-auto mb-16">
+          <Card className={`overflow-hidden ${heroSection.isVisible ? 'animate-scale-in' : 'opacity-0'}`}>
             <div className="aspect-video relative">
               <img
                 src="https://images.unsplash.com/photo-1459865264687-595d652de67e?w=1200"
@@ -78,12 +88,12 @@ const History = () => {
           </Card>
         </div>
 
-        <div className="relative max-w-4xl mx-auto">
+        <div ref={timelineSection.ref} className="relative max-w-4xl mx-auto">
           <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-secondary to-primary"></div>
           
-          <div className="space-y-12">
+          <div className={`space-y-12 ${timelineSection.isVisible ? '' : 'opacity-0'}`}>
             {milestones.map((milestone, index) => (
-              <div key={milestone.year} className="relative pl-24">
+              <div key={milestone.year} className={`relative pl-24 ${timelineSection.isVisible ? `animate-fade-in-right animation-delay-${Math.min(index, 5)}00` : ''}`}>
                 <div className="absolute left-0 w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-primary-foreground shadow-lg">
                   <Icon name={milestone.icon as any} size={28} />
                 </div>
@@ -103,8 +113,8 @@ const History = () => {
           </div>
         </div>
 
-        <div className="mt-16 grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <Card className="text-center bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
+        <div ref={statsSection.ref} className={`mt-16 grid md:grid-cols-3 gap-6 max-w-4xl mx-auto ${statsSection.isVisible ? '' : 'opacity-0'}`}>
+          <Card className={`text-center bg-gradient-to-br from-primary to-primary/80 text-primary-foreground ${statsSection.isVisible ? 'animate-scale-in animation-delay-100' : ''}`}>
             <CardContent className="p-8">
               <Icon name="Users" size={48} className="mx-auto mb-4" />
               <div className="text-4xl font-bold mb-2">15,000+</div>
@@ -112,7 +122,7 @@ const History = () => {
             </CardContent>
           </Card>
           
-          <Card className="text-center bg-gradient-to-br from-secondary to-secondary/80">
+          <Card className={`text-center bg-gradient-to-br from-secondary to-secondary/80 ${statsSection.isVisible ? 'animate-scale-in animation-delay-200' : ''}`}>
             <CardContent className="p-8">
               <Icon name="Trophy" size={48} className="mx-auto mb-4" />
               <div className="text-4xl font-bold mb-2">5</div>
@@ -120,7 +130,7 @@ const History = () => {
             </CardContent>
           </Card>
           
-          <Card className="text-center bg-gradient-to-br from-primary to-primary/80 text-primary-foreground">
+          <Card className={`text-center bg-gradient-to-br from-primary to-primary/80 text-primary-foreground ${statsSection.isVisible ? 'animate-scale-in animation-delay-300' : ''}`}>
             <CardContent className="p-8">
               <Icon name="Target" size={48} className="mx-auto mb-4" />
               <div className="text-4xl font-bold mb-2">250+</div>
@@ -128,8 +138,10 @@ const History = () => {
             </CardContent>
           </Card>
         </div>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

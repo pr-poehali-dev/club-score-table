@@ -1,0 +1,21 @@
+{
+  "tests": [
+    {
+      "name": "Update setting",
+      "method": "PUT",
+      "path": "/",
+      "body": {
+        "type": "setting",
+        "data": {
+          "key": "test_key",
+          "value": "test_value"
+        }
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "message": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

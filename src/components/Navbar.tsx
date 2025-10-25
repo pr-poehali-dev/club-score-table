@@ -13,6 +13,7 @@ const Navbar = () => {
     { path: "/news", label: "Новости" },
     { path: "/history", label: "История" },
     { path: "/contact", label: "Контакты" },
+    { path: "/admin", label: "Админ" },
   ];
 
   return (
@@ -28,7 +29,7 @@ const Navbar = () => {
               />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              ФК UNION
+              ФК UNION ВОРОНЕЖ
             </span>
           </Link>
 

@@ -1,5 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import Icon from "@/components/ui/icon";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface Player {
   number: number;
@@ -18,10 +21,16 @@ const players: Player[] = [
 ];
 
 const Team = () => {
+  const headerSection = useScrollAnimation();
+  const playersSection = useScrollAnimation();
+  const staffSection = useScrollAnimation();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      <div className="container mx-auto px-4 py-12">
-        <div className="text-center mb-12">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+        <div className="container mx-auto px-4 py-12">
+          <div ref={headerSection.ref} className={`text-center mb-12 ${headerSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Наша Команда
           </h1>
@@ -30,9 +39,9 @@ const Team = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {players.map((player) => (
-            <Card key={player.number} className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/50">
+        <div ref={playersSection.ref} className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 ${playersSection.isVisible ? '' : 'opacity-0'}`}>
+          {players.map((player, index) => (
+            <Card key={player.number} className={`overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-primary/50 ${playersSection.isVisible ? `animate-scale-in animation-delay-${Math.min(index, 5)}00` : ''}`}>
               <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
                 <img
                   src={player.image}
@@ -54,7 +63,7 @@ const Team = () => {
           ))}
         </div>
 
-        <Card className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
+        <Card ref={staffSection.ref} className={`bg-gradient-to-r from-primary to-primary/80 text-primary-foreground ${staffSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <CardContent className="p-8">
             <div className="flex items-center gap-4 mb-6">
               <div className="bg-primary-foreground/20 p-4 rounded-full">
@@ -76,8 +85,10 @@ const Team = () => {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

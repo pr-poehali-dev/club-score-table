@@ -1,6 +1,9 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface NewsItem {
   id: number;
@@ -47,10 +50,16 @@ const news: NewsItem[] = [
 ];
 
 const News = () => {
+  const headerSection = useScrollAnimation();
+  const newsSection = useScrollAnimation();
+  const subscribeSection = useScrollAnimation();
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      <div className="container mx-auto px-4 py-12">
-        <div className="text-center mb-12">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+        <div className="container mx-auto px-4 py-12">
+          <div ref={headerSection.ref} className={`text-center mb-12 ${headerSection.isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Новости Клуба
           </h1>
@@ -59,9 +68,9 @@ const News = () => {
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto space-y-6">
-          {news.map((item) => (
-            <Card key={item.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/50">
+        <div ref={newsSection.ref} className={`max-w-5xl mx-auto space-y-6 ${newsSection.isVisible ? '' : 'opacity-0'}`}>
+          {news.map((item, index) => (
+            <Card key={item.id} className={`overflow-hidden hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/50 ${newsSection.isVisible ? `animate-fade-in-up animation-delay-${index}00` : ''}`}>
               <div className="md:flex">
                 <div className="md:w-2/5 aspect-video md:aspect-auto">
                   <img
@@ -98,7 +107,7 @@ const News = () => {
           ))}
         </div>
 
-        <Card className="mt-12 max-w-5xl mx-auto bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
+        <Card ref={subscribeSection.ref} className={`mt-12 max-w-5xl mx-auto bg-gradient-to-r from-primary to-primary/80 text-primary-foreground ${subscribeSection.isVisible ? 'animate-scale-in' : 'opacity-0'}`}>
           <CardContent className="p-8 text-center">
             <Icon name="Bell" size={48} className="mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">Подпишитесь на рассылку</h2>
@@ -117,8 +126,10 @@ const News = () => {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

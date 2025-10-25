@@ -1,0 +1,17 @@
+{
+  "tests": [
+    {
+      "name": "Get all content",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "settings": "object",
+        "matches": "array",
+        "players": "array",
+        "news": "array"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
