@@ -157,8 +157,10 @@ const Contact = () => {
             ></iframe>
           </div>
         </Card>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
